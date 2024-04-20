@@ -48,4 +48,17 @@ router.get("/api/products/:pid", async (req, res) => {
     res.send({product})
 })
 
+router.post("/api/products", async (req, res) => {
+    try {
+        const { title, description, code, price, status, stock, category, thumbnail } = req.body;
+        await productManager.addProduct(title, description, code, price, status, stock, category, thumbnail);
+
+        res.json({message: "Producto agregado correctamente"})
+    } catch (error) {
+        console.error("Error al cargar el producto:", error);
+        res.status(500).json({error: "Ocurrió un errror al cargar el producto"})
+    }
+})
+
+
 export default router;
