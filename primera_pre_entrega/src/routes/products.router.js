@@ -51,13 +51,51 @@ router.get("/api/products/:pid", async (req, res) => {
 router.post("/api/products", async (req, res) => {
     try {
         const { title, description, code, price, status, stock, category, thumbnail } = req.body;
+
+        const codeExists = productManager.getProducts().find(product => product.code === code);
+        if (codeExists) {
+            return res.status(400).json({ error: "El campo code no se puede repetir, vuelva a intentar con otro código identificador" });
+        }
+
         await productManager.addProduct(title, description, code, price, status, stock, category, thumbnail);
 
-        res.json({message: "Producto agregado correctamente"})
+        productManager.saveProducts();
+
+        res.json({ message: "Producto agregado correctamente" });
+
     } catch (error) {
         console.error("Error al cargar el producto:", error);
         res.status(500).json({error: "Ocurrió un errror al cargar el producto"})
     }
+})
+
+router.put("/api/products/:pid", async (req, res) => {
+    try {
+        const pid = parseInt(req.params.pid);
+        const updatedProductData = req.body;
+
+        productManager.updateProduct(pid, updatedProductData);
+
+        res.json({ message: `El producto con el ID ${pid} fue actualizado correctamente` });
+
+    } catch (error) {
+        console.error("Error al actualizar el producto:", error);
+        res.status(500).json({ error: "Ocurrió un error al actualizar el producto" });
+    }
+})
+
+router.delete("/api/products/:pid", (req, res) => {
+    try {
+        const pid = parseInt(req.params.pid);
+
+        productManager.deleteProduct(pid);
+    
+        res.json({ message: `El producto con el ID ${pid} fue eliminado exitosamente` });
+    } catch (error) {
+        console.error("Error al eliminar el producto:", error);
+        res.status(500).json({ error: "Ocurrió un error al eliminar el producto" });
+    }
+
 })
 
 
