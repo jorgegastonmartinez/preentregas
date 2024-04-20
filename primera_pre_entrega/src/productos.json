@@ -1,24 +1,24 @@
 [
   {
     "id": 1,
-    "title": "Producto1",
-    "description": "Descripción del producto",
+    "title": "BOCATA DE TORTILLA",
+    "description": "baguette, tortilla de papas, alioli y tomates secos",
     "code": "ABC123",
-    "price": 10.99,
+    "price": 1800,
     "status": true,
     "stock": 100,
-    "category": "Electrónica",
-    "thumbnail": "ruta/thumbnail.jpg"
+    "category": "Bocatas",
+    "thumbnail": "ruta/thumbnail/bocata.jpg"
   },
   {
     "id": 2,
-    "title": "Producto 2",
+    "title": "ENSALADA VEGETARIANA",
     "description": "Descripción del producto 2",
-    "code": "ABC12355",
-    "price": 10.99,
+    "code": "scd12355",
+    "price": 1600,
     "status": true,
-    "stock": 100,
-    "category": "Electrónica",
-    "thumbnail": "ruta/thumbnail.jpg"
+    "stock": 140,
+    "category": "Ensaladas",
+    "thumbnail": "ruta/thumbnail/ensalada.jpg"
   }
 ]

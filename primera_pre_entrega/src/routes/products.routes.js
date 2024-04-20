@@ -5,34 +5,33 @@ const router = Router();
 
 const productManager = new ProductManager('primera_pre_entrega/src/productos.json');
 productManager.addProduct(
-  "Producto1",
-  "Descripción del producto",
+  "BOCATA DE TORTILLA",
+  "baguette, tortilla de papas, alioli y tomates secos",
   "ABC123",
-  10.99,
+  1800,
   true,
   100,
-  "Electrónica",
-  "ruta/thumbnail.jpg"
+  "Bocatas",
+  "ruta/thumbnail/bocata.jpg"
 );
 productManager.addProduct(
-  "Producto 2",
+  "ENSALADA VEGETARIANA",
   "Descripción del producto 2",
-  "ABC12355",
-  10.99,
+  "scd12355",
+  1600,
   true,
-  100,
-  "Electrónica",
-  "ruta/thumbnail.jpg"
+  140,
+  "Ensaladas",
+  "ruta/thumbnail/ensalada.jpg"
 );
 
 router.get("/api/products", async (req, res) => {
     try {
-        const product = await productManager;
+        const product = await productManager.getProducts();
         const limit = parseInt(req.query.limit);
         const result = limit ? product.slice(0, limit) : product;
 
         res.json(result);
-
     } catch (error) {
         console.error("Error al obtener los productos", error);
         res.status(500).json({ error: "Error al obtener los productos" });

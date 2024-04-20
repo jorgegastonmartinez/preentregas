@@ -97,22 +97,3 @@ class ProductManager {
 }
 
 export { ProductManager }; 
-
-// const productManager = new ProductManager("productos.json");
-
-// const productList = productManager.getProducts();
-// console.log(productList);
-
-// productManager.addProduct(
-//     "producto prueba",
-//     "esto es un producto prueba",
-//     "esto es un producto prueba2",
-//     2233,
-//     undefined,
-//     4,
-//     "abc123",
-//     [
-//         "ruta2.jpg"
-//     ]
-// );
-
