@@ -98,5 +98,4 @@ router.delete("/api/products/:pid", (req, res) => {
 
 })
 
-
 export default router;
