@@ -29,12 +29,9 @@ class CartsManager {
         return this.carritos;
     }
 
-    generateUniqueID() {
-        return Math.random().toString(36).substr(2, 9);
-    }
-
     createCart() {
-        const cart_id = this.generateUniqueID();
+
+        const cart_id = this.carritos.length + 1;
         const newCart = {
             id: cart_id,
             products: []
@@ -46,13 +43,13 @@ class CartsManager {
     }
 
     getCartById(cart_id) {
-        const cartFound = this.carritos.find(carrito => carrito.id === cart_id);
+        const cartFound = this.carritos.find((cart) => cart.id === cart_id);
         if(!cartFound) {
             console.log("Not Found");
         }
         return cartFound;
     }
-
+    
     addProductToCart(cartId, productId) {
         const cart = this.getCartById(cartId);
         if (!cart) {
@@ -60,7 +57,7 @@ class CartsManager {
             return;
         }
 
-        const product = this.getProductById(productId);
+        const product = this.productManager.getProductById(productId); 
         if (!product) {
             console.error("No se encontró el producto con el ID especificado");
             return;
