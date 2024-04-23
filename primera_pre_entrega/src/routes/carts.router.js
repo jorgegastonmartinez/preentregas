@@ -19,7 +19,7 @@ router.post("/api/carts", async (req, res) => {
 
 router.get("/api/carts/:cid", async (req, res) => {
     try {
-        const cid = parseInt(req.params.cid);
+        const cid = req.params.cid;
 
         const cart = await cartManager.getCartById(cid);
 
@@ -31,7 +31,7 @@ router.get("/api/carts/:cid", async (req, res) => {
             return productManager.getProductById(productId)
         });
 
-        req.json({ products });
+        res.json({ products });
     } catch (error) {
         console.error("Error al obtener los productos del carrito", error);
         res.status(500).json({error: "Ocurrió un error al obtener los productos del carrito"})

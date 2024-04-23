@@ -95,7 +95,6 @@ router.delete("/api/products/:pid", (req, res) => {
         console.error("Error al eliminar el producto:", error);
         res.status(500).json({ error: "Ocurrió un error al eliminar el producto" });
     }
-
 })
 
 export default router;

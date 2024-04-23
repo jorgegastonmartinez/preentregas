@@ -46,7 +46,7 @@ class CartsManager {
     }
 
     getCartById(cart_id) {
-        const cartFound = this.carritos.find((newCart) => newCart.id === cart_id);
+        const cartFound = this.carritos.find(carrito => carrito.id === cart_id);
         if(!cartFound) {
             console.log("Not Found");
         }
