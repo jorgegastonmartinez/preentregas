@@ -9,40 +9,32 @@ router.get("/products", async (req, res) => {
     page = parseInt(page);
 
     try {
-        // construir filtro de busqueda
         let filter = {};
         if(query) {
-            // buscar por categoria o disponibilidad
             filter = {
                 $or: [
                     { category: query },
-                    // comparar como boleano
                     { stock: { $gt: 0 } }
                 ]
             }
         }
 
-        // opciones de sorteo
         let sortOptions = {};
         if (sort) {
             sortOptions.price = sort === "asc" ? 1 : -1;
         }
 
-        // obtener el total de productos que coincidan con el filtro
         const totalProducts = await productModel.countDocuments(filter);
 
-        // calcular la paginacion
         const totalPages = Math.ceil(totalProducts / limit);
         const offset = (page - 1) * limit;
 
-        // obtener los productos paginados
         const products = await productModel
             .find(filter)
             .sort(sortOptions)
             .skip(offset)
             .limit(limit);
         
-        // construir la respuesta
         const response = {
             status: "success",
             payload: products,
