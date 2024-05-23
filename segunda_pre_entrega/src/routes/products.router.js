@@ -17,7 +17,7 @@ router.get("/products", async (req, res) => {
                 $or: [
                     { category: query },
                     // comparar como boleano
-                    { available: query.toLowerCase() === "true" }
+                    { stock: { $gt: 0 } }
                 ]
             }
         }

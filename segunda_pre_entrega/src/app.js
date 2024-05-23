@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import handlebars from "express-handlebars";
 import dotenv from "dotenv";
-import __dirname from "./utils";
+import __dirname from "./utils.js";
 
 import viewsRouter from "./routes/views.router.js";
 import cartsRouter from "./routes/carts.router.js";
