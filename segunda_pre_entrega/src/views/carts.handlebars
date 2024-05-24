@@ -1,0 +1,34 @@
+    {{!-- <h1>{{message}}</h1>
+    <h2>Carrito ID: {{cart._id}}</h2>
+    <ul>
+        {{#each cart.products}}
+        <li>
+            Producto ID: {{this.product}}, Cantidad: {{this.quantity}}
+        </li>
+        {{/each}}
+    </ul>
+    <h3>Total: {{cart.total}}</h3> --}}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+</head>
+<body>
+    <h1>{{message}}</h1>
+    <h2>Carrito ID: {{cart._id}}</h2>
+    <ul>
+        {{#each cart.products}}
+        <li>
+            Producto: {{this.product.title}}, Cantidad: {{this.quantity}}
+            <button class="add-to-cart" data-id="{{this.product._id}}" data-cart-id="{{cart._id}}">Agregar más</button>
+        </li>
+        {{/each}}
+    </ul>
+    <h3>Total: {{cart.total}}</h3>
+    <script src="../public/js/index.js"></script> <!-- Incluir el archivo JavaScript -->
+</body>
+</html>

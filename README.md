@@ -13,20 +13,37 @@ Jorge Martinez.
 
 ## Imagenes del proyecto
 
-router.get("/api/products")
-![router get de products](./primera_pre_entrega/public/img/Captura%20de%20pantalla%202024-04-22%20a%20la(s)%208.43.00 p. m..png)
+router.post("/:cid/products/:pid")
 
-router.get("/api/products/:pid")
-![router get de products por ID](./primera_pre_entrega/public/img/Captura%20de%20pantalla%202024-04-22%20a%20la(s)%208.50.33 p. m..png)
+![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-24%20a%20la(s)%206.05.22 p. m..png)
 
-router.post("/api/carts/:cid/product/:pid")
-![router post](./primera_pre_entrega/public/img/Captura%20de%20pantalla%202024-04-23%20a%20la(s)%2012.01.10 a. m..png)
+Vista de products
 
-router.post("/api/carts")
-![router post de carts](./primera_pre_entrega/public/img/Captura%20de%20pantalla%202024-04-23%20a%20la(s)%2012.03.20 a. m..png)
+![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-24%20a%20la(s)%206.29.24 p. m..png)
 
-router.post("/api/carts/:cid/product/:pid")
-![router post de carts y products](./primera_pre_entrega/public/img/Captura%20de%20pantalla%202024-04-23%20a%20la(s)%2012.17.27 a. m..png)
+router.delete("api/carts/:cid/products/:pid")
+
+![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-24%20a%20la(s)%206.19.08 p. m..png)
+
+
+
+
+
+router.put("api/carts/:cid")
+
+![](./segunda_pre_entrega/src/public/img/)
+
+
+router.put("/carts/:cid/products/:pid")
+
+![](./segunda_pre_entrega/src/public/img/)
+
+
+
+
+router.put("/carts/:cid/products/:pid")
+
+![](./segunda_pre_entrega/src/public/img/)
 
 ## Comandos
 

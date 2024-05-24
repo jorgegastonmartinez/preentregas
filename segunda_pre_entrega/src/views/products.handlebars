@@ -3,7 +3,8 @@
     {{#each docs}}
     <div>
         <h2>Producto: {{this.title}} &nbsp; descripcion: {{this.description}}</h2>
-        <h4>Precio: {{this.price}} &nbsp; Categoria: {{this.category}} &nbsp; Stock: {{this.stock}}</h4>
+        <h4>Precio: {{this.price}} &nbsp; Stock: {{this.stock}}</h4>
+        <button class="add-to-cart" data-id="{{this.id}}">Agregar al carrito</button>
     </div>
     <br>
     {{/each}}
