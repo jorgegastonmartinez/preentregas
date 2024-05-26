@@ -42,6 +42,48 @@ router.get("/carts/:cid", async (req, res) => {
     }
 });
 
+// router.post("/carts/:cid/products/:pid", async (req, res) => {
+//     try {
+//         let { cid } = req.params;
+//         let { pid } = req.params;
+//         let { quantity } = req.body;
+
+//         if (!mongoose.Types.ObjectId.isValid(cid) || !mongoose.Types.ObjectId.isValid(pid)) {
+//             return res.status(400).json({ error: "ID carrito o producto no válido" });
+//         }
+
+//         let cart = await cartsModel.findById(cid).populate("products.product");
+//         if (!cart) {
+//             return res.status(404).json({ error: "Carrito no encontrado" });
+//         }
+
+//         let product = await productsModel.findById(pid);
+//         if (!product) {
+//             return res.status(404).json({ error: "Producto no encontrado" });
+//         }
+
+//         let existingProduct = cart.products.find(item => item.product.toString() === pid);
+
+//         if (existingProduct) {
+//             existingProduct.quantity += quantity || 1;
+//         } else {
+//             cart.products.push({ product: pid, quantity: quantity || 1 });
+//         }
+
+//         cart.total = cart.products.reduce((acc, item) => acc + item.quantity * product.price, 0);
+
+//         await cart.save();
+
+//         return res.status(200).json({ message: 'Producto agregado al carrito', cart });
+//     } catch (error) {
+//         console.error("Error al agregar producto al carrito", error);
+//         res.status(500).json({ error: "Ocurrió un error al agregar producto al carrito" });
+//     }
+// });
+
+
+
+
 router.post("/carts/:cid/products/:pid", async (req, res) => {
     try {
         let { cid } = req.params;
@@ -52,7 +94,7 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
             return res.status(400).json({ error: "ID carrito o producto no válido" });
         }
 
-        let cart = await cartsModel.findById(cid);
+        let cart = await cartsModel.findById(cid).populate("products.product");
         if (!cart) {
             return res.status(404).json({ error: "Carrito no encontrado" });
         }
@@ -62,14 +104,14 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
             return res.status(404).json({ error: "Producto no encontrado" });
         }
 
-        let existingProduct = cart.products.find(item => item.product.toString() === pid);
+        const existsProductIndex = cart.products.findIndex(item => item.product._id.toString() === pid);
 
-        if (existingProduct) {
-            existingProduct.quantity += quantity || 1;
+        if (existsProductIndex !== -1) {
+            cart.products[existsProductIndex].quantity++;
+
         } else {
-            cart.products.push({ product: pid, quantity: quantity || 1 });
-        }
-
+                cart.products.push({ product: pid, quantity: quantity || 1 });
+            }
         cart.total = cart.products.reduce((acc, item) => acc + item.quantity * product.price, 0);
 
         await cart.save();
@@ -80,7 +122,6 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
         res.status(500).json({ error: "Ocurrió un error al agregar producto al carrito" });
     }
 });
-
 
 
 
@@ -122,7 +163,6 @@ router.delete("/carts/:cid/products/:pid", async (req, res) => {
         res.status(500).json({ error: "Ocurrió un error al eliminar producto del carrito" });
     }
 });
-
 
 router.put("/carts/:cid", async (req, res) => {
     const { cid } = req.params;

@@ -14,7 +14,7 @@ router.get("/products", async (req, res) => {
 
     let result = await productsModel.paginate(
       {},
-      { page, limit: 5, lean: true }
+      { page, limit: 10, lean: true }
     )
     result.prevLink = result.hasPrevPage ? `http://localhost:8080/products?page=${result.prevPage}`:'';
     result.nextLink = result.hasNextPage ? `http://localhost:8080/products?page=${result.nextPage}`:'';
@@ -25,7 +25,7 @@ router.get("/products", async (req, res) => {
 router.get("/carts/:cid", async (req, res) => {
   const { cid } = req.params;
 
-  const cart = await cartsModel.findById(cid);
+  const cart = await cartsModel.findById(cid).lean();
 
   if (!cart) {
     return res.status(404).json({ error: "Carrito no encontrado" });
