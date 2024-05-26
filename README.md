@@ -25,25 +25,16 @@ router.delete("api/carts/:cid/products/:pid")
 
 ![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-24%20a%20la(s)%206.19.08 p. m..png)
 
-
 router.get("/:cid")
 ![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-25%20a%20la(s)%209.04.41 p. m..png)
 
 router.put("api/carts/:cid")
 
-![](./segunda_pre_entrega/src/public/img/)
-
-
-router.put("/carts/:cid/products/:pid")
-
-![](./segunda_pre_entrega/src/public/img/)
-
-
-
+![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-26%20a%20la(s)%2012.15.23 p. m..png)
 
 router.put("/carts/:cid/products/:pid")
 
-![](./segunda_pre_entrega/src/public/img/)
+![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-26%20a%20la(s)%2012.09.46 p. m..png)
 
 ## Comandos
 
