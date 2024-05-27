@@ -4,7 +4,9 @@
     <div>
         <h2>Producto: {{this.title}} &nbsp; descripcion: {{this.description}}</h2>
         <h4>Precio: {{this.price}} &nbsp; Stock: {{this.stock}}</h4>
-        <button class="add-to-cart" data-id="{{this.id}}">Agregar al carrito</button>
+        <form class="add-to-cart-form" data-product-id="{{this._id}}">
+            <button type="submit">Add to Cart</button>
+        </form>
     </div>
     <br>
     {{/each}}
@@ -24,3 +26,47 @@
 {{else}}
 <h1>No hay productos disponibles</h1>
 {{/if}}
+</div>
+
+<script>
+    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const productId = form.getAttribute('data-product-id');
+            
+            try {
+                const cartResponse = await fetch('/api/carts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!cartResponse.ok) {
+                    const errorText = await cartResponse.text();
+                    throw new Error(errorText);
+                }
+                const cartResult = await cartResponse.json();
+                const cartId = cartResult.cart._id;
+                const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ quantity: 1 })
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(errorText);
+                }
+                    alert('Producto agregado al carrito');
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert(`Error al agregar producto al carrito: ${error.message}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
