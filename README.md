@@ -36,6 +36,10 @@ router.put("/carts/:cid/products/:pid")
 
 ![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-26%20a%20la(s)%2012.09.46 p. m..png)
 
+Vista agregar producto al carrito
+
+![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-27%20a%20la(s)%202.16.52 p. m..png)
+
 ## Comandos
 
 ```

@@ -25,7 +25,6 @@ router.get("/products", async (req, res) => {
         }
 
         const totalProducts = await productModel.countDocuments(filter);
-
         const totalPages = Math.ceil(totalProducts / limit);
         const offset = (page - 1) * limit;
 
@@ -49,7 +48,6 @@ router.get("/products", async (req, res) => {
         };
 
         res.json(response);
-
     } catch (error) {
         console.error("Error al recuperar productos", error);
         res.status(500).json({status: "error", message: "Error Interno del Servidor"})
@@ -59,9 +57,7 @@ router.get("/products", async (req, res) => {
 router.get("/products/:pid", async (req, res) => {
     try {
         let {pid} = req.params;
-
         let product = await productModel.findById(pid);
-
         if (!product) {
             return res.status(400).send({error: "Producto no encontrado"})
         }
@@ -80,7 +76,6 @@ router.post("/products", async (req, res) => {
         console.log("Debes completar todos los campos");
         return res.status(400).send({error: "Debes completar correctamente todos los campos"});
     }
-
     stock = Number(stock)
     if (stock <= 0) {
         console.log("El STOCK debe ser mayor que 0");
@@ -118,6 +113,7 @@ router.put("/products/:pid", async (req, res) => {
     let productToUpdate = req.body;
 
     if (!productToUpdate.title || !productToUpdate.description || !productToUpdate.code || !productToUpdate.price || isNaN(productToUpdate.stock) || !productToUpdate.category) {
+        
         res.send({status: "Error", error: "Debe completar todos los campos del producto"})
     }
 

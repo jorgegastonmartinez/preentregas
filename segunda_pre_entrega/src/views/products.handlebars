@@ -48,6 +48,7 @@
                 }
                 const cartResult = await cartResponse.json();
                 const cartId = cartResult.cart._id;
+                
                 const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
                     method: 'POST',
                     headers: {
