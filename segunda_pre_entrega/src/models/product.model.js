@@ -10,11 +10,6 @@ const productsSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   stock: { type: Number, require: true },
   category: { type: String, require: true, max: 50 },
-
-  carts: {
-    type: Array,
-    default: []
-  }
 });
 
 productsSchema.plugin(mongoosePaginate);
