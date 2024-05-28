@@ -25,7 +25,8 @@ router.delete("api/carts/:cid/products/:pid")
 
 ![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-24%20a%20la(s)%206.19.08 p. m..png)
 
-router.get("/:cid")
+router.get("/api/carts/:cid")
+
 ![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-25%20a%20la(s)%209.04.41 p. m..png)
 
 router.put("api/carts/:cid")
@@ -39,6 +40,10 @@ router.put("/carts/:cid/products/:pid")
 Vista agregar producto al carrito
 
 ![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-27%20a%20la(s)%202.16.52 p. m..png)
+
+Vista de productos en el carrito
+
+![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-28%20a%20la(s)%2012.59.39 p. m..png)
 
 ## Comandos
 

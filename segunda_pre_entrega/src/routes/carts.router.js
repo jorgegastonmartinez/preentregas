@@ -24,7 +24,8 @@ router.get("/carts/:cid", async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(cid)) {
             return res.status(400).json({ error: "ID de carrito no válido" });
         }
-        const cart = await cartsModel.findById(cid).populate('products.product');
+        const cart = await cartsModel.findById(cid).populate('products.product').lean();
+        
         if (!cart) {
             return res.status(404).json({ error: "Carrito no encontrado" });
         }
