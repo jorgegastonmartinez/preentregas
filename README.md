@@ -1,6 +1,6 @@
 # Título del Proyecto
 
-Segunda preentrega
+Tercera preentrega
 
 ## Curso
 Backend 
@@ -59,4 +59,4 @@ npm start
 
 ## Contacto
 
-Si tienes alguna pregunta o inquietud, puedes ponerte en contacto conmigo al correo `jorge_gmartinez@hotmail.com`.
+Si tienes alguna pregunta o inquietud, puedes ponerte en contacto conmigo al correo `jgastonmartinez@gmail.com`.
