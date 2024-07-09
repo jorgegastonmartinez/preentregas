@@ -17,25 +17,17 @@ import viewsRouter from './routes/views.router.js';
 import cartsRouter from "./routes/carts.router.js";
 import productsRouter from "./routes/products.router.js";
 import "./config/passport.config.js"
-
-// 
 import adminRouter from "./routes/admin.router.js"
-
-// 
 import messageRouter from "./routes/messages.router.js"
-
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 
-//
 const httpServer = app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}`);
 })
 const socketServer = new Server(httpServer);
-// const io = new Server(socketServer);
-
 
 app.engine('handlebars', engine({
     extname: '.handlebars',
@@ -68,8 +60,6 @@ app.use('/', viewsRouter);
 app.use("/api", cartsRouter);
 app.use("/api", productsRouter);
 app.use("/api", adminRouter);
-
-//
 app.use("/api/messages", messageRouter);
 
 socketServer.on("connection", (socket) => {
@@ -83,4 +73,3 @@ socketServer.on("connection", (socket) => {
         console.log('Un usuario se ha desconectado');
     });
 });
-

@@ -55,7 +55,6 @@ export const loginUser = (req, res, next) => {
   })(req, res, next);
 };
 
-
 export const failLogin = (req, res) => {
   res.send({ error: "Login fallido" });
 };
@@ -66,23 +65,6 @@ export const logoutUser = (req, res) => {
     res.redirect("/login");
   });
 };
-
-// export const getCurrentUser = (req, res) => {
-//   const user = req.session.user;
-//   try {
-//     if (!req.session || !req.session.user) {
-//       return res.redirect("/login");
-//     }
-//     res.render('current', { user, isAdmin: user.role === 'admin' });
-//   } catch (error) {
-//     console.error("Error al obtener el usuario actual:", error);
-//     return res.status(500).send({ error: "Error al obtener el usuario actual" });
-//   }
-// };
-
-
-
-
 
 export const getCurrentUser = (req, res) => {
   try {

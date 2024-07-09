@@ -1,11 +1,9 @@
 import productModel from "../models/product.model.js";
 import cartModel from "../models/cart.model.js";
-
 import messageModel from '../models/message.model.js';
 
-
 export const renderLogin = async (req, res) => {
-  res.render("login", {});
+    res.render("login", {});
 };
 
 export const renderProducts = async (req, res) => {
@@ -64,12 +62,12 @@ export const getProductsForAdmin = async (req, res) => {
   res.render("admin-products", { ...result, user, messages });
 };
 
-export const renderChat = async (req, res) => {
+export const deleteMessage = async (req, res) => {
   try {
-      const messages = await messageModel.find();
-      res.render('chat', { messages });
+      const { mid } = req.params;
+      await messageModel.findByIdAndDelete(mid);
+      res.status(200).send('Mensaje eliminado');
   } catch (error) {
-      console.error('Error al obtener los mensajes:', error);
-      res.status(500).send('Error al obtener los mensajes');
+      res.status(500).send(error.message);
   }
 };
