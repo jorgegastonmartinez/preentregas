@@ -8,6 +8,9 @@ import MongoStore from 'connect-mongo';
 import __dirname from './utils.js';
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
+//
+import { Server } from "socket.io";
+
 
 import sessionsRouter from './routes/api/sessions.js';
 import viewsRouter from './routes/views.router.js';
@@ -15,9 +18,24 @@ import cartsRouter from "./routes/carts.router.js";
 import productsRouter from "./routes/products.router.js";
 import "./config/passport.config.js"
 
+// 
+import adminRouter from "./routes/admin.router.js"
+
+// 
+import messageRouter from "./routes/messages.router.js"
+
+
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
+
+//
+const httpServer = app.listen(PORT, () => {
+    console.log(`Server is running on PORT ${PORT}`);
+})
+const socketServer = new Server(httpServer);
+// const io = new Server(socketServer);
+
 
 app.engine('handlebars', engine({
     extname: '.handlebars',
@@ -28,6 +46,8 @@ app.set("views", __dirname + "/views");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(express.json());
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -47,7 +67,20 @@ app.use('/api/sessions', sessionsRouter);
 app.use('/', viewsRouter);
 app.use("/api", cartsRouter);
 app.use("/api", productsRouter);
+app.use("/api", adminRouter);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+//
+app.use("/api/messages", messageRouter);
+
+socketServer.on("connection", (socket) => {
+    console.log('Un usuario se ha conectado');
+
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg);  // Emitir el mensaje a todos los clientes
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Un usuario se ha desconectado');
+    });
 });
+

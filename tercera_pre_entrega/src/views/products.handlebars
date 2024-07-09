@@ -1,16 +1,28 @@
-<h2>Bienvenido al ecommerce de la Chocolatería San Ginés</h2>
-<p>Nombre: {{user.first_name}} </p>
-<p>Apellido: {{user.last_name}} </p>
-<p>Email: {{user.email}} </p>
-<p>Edad: {{user.age}}</p>
-<p>Role: {{user.role}} </p>
-<form action="/api/sessions/logout" method="POST">
-    <button type="submit">Cerrar sesión</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <div>
+        <h2>Bienvenido al ecommerce de la Chocolatería San Ginés</h2>
+            <p>Nombre: {{user.first_name}} </p>
+            <p>Email: {{user.email}} </p>
+            <p>Role: {{user.role}} </p>
+        <form action="/api/sessions/logout" method="POST">
+            <button type="submit">Cerrar sesión</button>
+        </form>
 
-<form action="/api/sessions/current" method="GET">
-    <button type="submit">Ir al perfil</button>
-</form>
+        <form action="/api/sessions/current" method="GET">
+            <button type="submit">Ir al perfil</button>
+        </form>
+
+    <div>
+        <h2>Realizar consulta</h2>
+        <div>
+            <input type="text" id="messageInput" placeholder="Ingrese un mensaje">
+            <button id="sendMessageButton">Enviar</button>
+        </div>
+    </div>
 
 {{#if isValid}}
 <div>
@@ -42,7 +54,43 @@
 {{/if}}
 </div>
 
-<script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        document.getElementById('sendMessageButton').addEventListener('click', async () => {
+            const message = document.getElementById('messageInput').value;
+            if (message) {
+                try {
+                    const response = await fetch('/api/messages', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({ message })
+                    });
+
+                    if (response.ok) {
+                        document.getElementById('messageInput').value = '';
+                        alert('Consulta enviada correctamente');
+                    } else {
+                        console.error('Error al enviar el mensaje');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        });
+
+        socket.on('chat message', function(msg) {
+            const item = document.createElement('li');
+            item.textContent = `${msg.user.first_name}: ${msg.message}`;  
+            document.getElementById('messageList').appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+    </script>
+
+    <script>
     document.querySelectorAll('.add-to-cart-form').forEach(form => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
