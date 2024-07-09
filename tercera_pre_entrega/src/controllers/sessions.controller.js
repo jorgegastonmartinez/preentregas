@@ -73,7 +73,7 @@ export const getCurrentUser = (req, res) => {
     }
 
     const userDTO = new UserDTO(req.session.user);
-    console.log(userDTO); // Debugging: Verifica que `userDTO` tenga los datos correctos
+    console.log(userDTO); 
     
     res.render('current', { user: userDTO, isAdmin: req.session.user.role === 'admin' });
   } catch (error) {
