@@ -22,35 +22,6 @@ export const createCart = async (req, res) => {
     }
 };
 
-
-
-
-// export const createCart = async (req, res, next) => {
-//     try {
-//       const userId = req.session.user._id;
-//       if (!userId) {
-//         return res.status(400).json({ error: "El ID del usuario no está definido en la sesión" });
-//       }
-//       const { message, cart } = await cartDAO.createCartForUser(userId);
-  
-//       if (message === "Ya existe un carrito para este usuario") {
-//         req.session.user.cart = cart._id;
-//         return next();
-//       }
-  
-//       req.session.user.cart = cart._id;
-//       next();
-//     } catch (error) {
-//       console.error("Error al crear el carrito:", error);
-//       res.status(500).json({ error: "Ocurrió un error al crear el carrito" });
-//     }
-//   };
-  
-
-
-
-
-
 export const getCart = async (req, res) => {
     try {
         const { cid } = req.params;

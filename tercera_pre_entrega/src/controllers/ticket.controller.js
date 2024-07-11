@@ -1,12 +1,3 @@
-// aqui hay que ver varios puntos
-// primero pasar user a dao seguramente
-// modificar las rutas de las classes
-// ver los metodos 
-// seguir la idea de la clase arquitectura-completo
-
-
-
-
 import mongoose from 'mongoose';
 import Ticket from '../dao/ticket/ticket.dao.js'
 import User from '../dao/user/user.dao.js'

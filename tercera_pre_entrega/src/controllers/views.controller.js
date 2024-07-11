@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import productModel from "../models/product.model.js";
-// import cartModel from "../models/cart.model.js";
 import messageModel from '../models/message.model.js';
 import cartModel from "../models/cart.model.js";
 
@@ -35,14 +34,12 @@ export const renderCart = async (req, res) => {
 
   const cart = await cartModel.findById(cid).populate('products.product').populate('user').lean();
 
-
   console.log(cart);
   if (!cart) {
     return res.status(404).json({ error: "Carrito no encontrado" });
   }
   res.render("carts", {cart, user});
 };
-
 
 export const renderLoginPage = (req, res) => {
   res.render("login");

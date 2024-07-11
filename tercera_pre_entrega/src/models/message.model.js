@@ -9,9 +9,6 @@ const messageSchema = new mongoose.Schema({
     timestamps: true, 
 }); 
 
-// messageSchema.pre("find", function() {
-//   this.populate("user")
-// })
 const messageModel = mongoose.model(messageCollection, messageSchema);
 
 export default messageModel;

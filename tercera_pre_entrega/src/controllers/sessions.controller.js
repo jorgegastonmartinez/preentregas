@@ -1,13 +1,6 @@
 import passport from "passport";
 import UserDTO from "../dto/user.dto.js";
 
-import { createCart } from "./cart.controller.js";
-import cartsModel from "../models/cart.model.js";
-
-
-
-
-
 export const registerUser = (req, res, next) => {
   passport.authenticate("register", { failureRedirect: "/failregister" }, (err, user, info) => {
     if (err) {
@@ -51,7 +44,6 @@ export const loginUser = (req, res, next) => {
         email: user.email,
         age: user.age,
         cart: user.cart,
-    
         role: user.role,
       };
 
