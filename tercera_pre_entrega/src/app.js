@@ -16,9 +16,10 @@ import sessionsRouter from './routes/api/sessions.js';
 import viewsRouter from './routes/views.router.js';
 import cartsRouter from "./routes/carts.router.js";
 import productsRouter from "./routes/products.router.js";
-import "./config/passport.config.js"
-import adminRouter from "./routes/admin.router.js"
-import messageRouter from "./routes/messages.router.js"
+import "./config/passport.config.js";
+import adminRouter from "./routes/admin.router.js";
+import messageRouter from "./routes/messages.router.js";
+import ticketRouter from "./routes/ticket.router.js"
 
 dotenv.config();
 const app = express();
@@ -40,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -61,6 +63,7 @@ app.use("/api", cartsRouter);
 app.use("/api", productsRouter);
 app.use("/api", adminRouter);
 app.use("/api/messages", messageRouter);
+app.use("/api/ticket", ticketRouter);
 
 socketServer.on("connection", (socket) => {
     console.log('Un usuario se ha conectado');

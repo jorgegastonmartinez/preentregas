@@ -16,6 +16,47 @@
             <button type="submit">Ir al perfil</button>
         </form>
 
+
+
+<!-- Botón para ir a la vista del carrito del usuario -->
+  {{#if user.cartId}}
+    <form action="/carts/{{user.cartId}}" method="GET">
+      <button type="submit">Ver Carrito</button>
+    </form>
+  {{else}}
+    <p>No se encontró un carrito para este usuario.</p>
+  {{/if}}
+
+
+
+
+
+<!-- Botón para ir a la vista del carrito del usuario -->
+  {{#if user.cartId}}
+    <form action="/carts/{{cartId}}" method="GET">
+      <button type="submit">Ver Carrito</button>
+    </form>
+  {{else}}
+    <p>No se encontró un carrito para este usuario.</p>
+  {{/if}}
+
+
+         <!-- Botón para ir a la vista de carts -->
+        <form action="/carts/{{user.cartId}}" method="GET">
+            <button type="submit">Ver Carrito1</button>
+        </form>
+
+
+          <!-- Botón para ir a la vista de carts -->
+  <form action="/carts/{{cart._id}}" method="GET">
+    <button type="submit">Ver Carrito2</button>
+  </form>
+
+           <!-- Botón para ir a la vista de carts -->
+  <form action="/carts/{{user.cart._id}}" method="GET">
+    <button type="submit">Ver Carrito3</button>
+  </form>
+
     <div>
         <h2>Realizar consulta</h2>
         <div>
@@ -53,6 +94,11 @@
 <h1>No hay productos disponibles</h1>
 {{/if}}
 </div>
+
+
+
+
+
     <script src="/socket.io/socket.io.js"></script>
     
     <script>

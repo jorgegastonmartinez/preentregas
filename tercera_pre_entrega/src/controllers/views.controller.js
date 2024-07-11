@@ -1,6 +1,9 @@
+import mongoose from "mongoose";
 import productModel from "../models/product.model.js";
-import cartModel from "../models/cart.model.js";
+// import cartModel from "../models/cart.model.js";
 import messageModel from '../models/message.model.js';
+import cartModel from "../models/cart.model.js";
+
 
 export const renderLogin = async (req, res) => {
     res.render("login", {});
@@ -21,18 +24,41 @@ export const renderProducts = async (req, res) => {
 
   const user = req.session.user;
 
-  res.render("products", { ...result, user });
+  res.render("products", { ...result, user});
 };
+
+
+
+// export const renderCart = async (req, res) => {
+//   try {
+//     const cart = await cartModel.find().populate('products.product').populate('user').lean();
+    
+//     if (!cart) {
+//         return res.status(404).json({ error: "Carrito no encontrado" });
+//     }
+//     // res.status(200).json({ cart });
+//     res.render("carts", { cart });
+
+// } catch (error) {
+//     console.error("Error al obtener el carrito:", error);
+//     res.status(500).json({ error: "Ocurrió un error al obtener el carrito" });
+// }
+// };
+
 
 export const renderCart = async (req, res) => {
   const { cid } = req.params;
 
-  const cart = await cartModel.findById(cid).populate("products.product").lean();
+  const user = req.session.user; // Obtén la información del usuario desde la sesión
+  console.log('User:', user);
 
+  const cart = await cartModel.findById(cid).populate('products.product').populate('user').lean();
+
+  console.log(cart);
   if (!cart) {
     return res.status(404).json({ error: "Carrito no encontrado" });
   }
-  res.render("carts", cart);
+  res.render("carts", {cart, user});
 };
 
 export const renderLoginPage = (req, res) => {

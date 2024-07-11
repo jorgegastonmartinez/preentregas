@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Ticket</title>
+</head>
+<body>
+    <h1>Confirmar Ticket</h1>
+    <h2>Productos en tu Carrito</h2>
+    {{#if cart.products.length}}
+    <ul>
+        {{#each cart.products}}
+        <li>
+            <strong>{{this.product.title}}</strong> - Cantidad: {{this.quantity}} - Precio: {{this.product.price}}
+        </li>
+        {{/each}}
+    </ul>
+    <h2>Total: {{this.total}}</h2>
+
+    <form action="/api/ticket" method="POST">
+        <button type="submit">Confirmar Compra</button>
+    </form>
+    {{else}}
+    <p>Tu carrito está vacío.</p>
+    {{/if}}
+</body>
+</html>

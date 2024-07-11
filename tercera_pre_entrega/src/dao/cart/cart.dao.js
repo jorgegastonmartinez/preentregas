@@ -5,8 +5,7 @@ import mongoose from "mongoose";
 export default class CartDAO {
     async createCartForUser(userId) {
         try {
-            let existingCart = await cartModel.findOne({ user: userId }).populate('user');
-
+            let existingCart = await cartModel.findOne({ user: userId }).populate('products.product').populate('user').lean();
             if (existingCart) {
                 return { message: "Ya existe un carrito para este usuario", cart: existingCart };
             }
@@ -210,6 +209,21 @@ export default class CartDAO {
         } catch (error) {
             console.error('Error al eliminar los productos del carrito:', error.message);
             throw new Error('Error al eliminar los productos del carrito');
+        }
+    }
+
+
+    async getCartByUserId(userId) {
+        try {
+            if (!mongoose.Types.ObjectId.isValid(userId)) {
+                throw new Error("ID de usuario no válido");
+            }
+            const cart = await cartModel.findOne({ user: userId }).populate('products.product').populate('user').lean();
+
+            return { message: 'Carrito encontrado', cart };
+        } catch (error) {
+            console.error("Error al obtener el carrito:", error);
+            throw new Error("Ocurrió un error al obtener el carrito");
         }
     }
 }

@@ -11,9 +11,10 @@ export const createCart = async (req, res) => {
         }
         const { message, cart } = await cartDAO.createCartForUser(userId);
 
-        if (message === "Ya existe un carrito para este usuario") {
+        if (message === "Ya existe un carrito para este usuario") { 
             return res.json({ message, cart });
         }
+
         res.json({ message, cart });
     } catch (error) {
         console.error("Error al crear el carrito:", error);
@@ -21,18 +22,51 @@ export const createCart = async (req, res) => {
     }
 };
 
+// export const createCart = async (req, res) => {
+//     try {
+//       const userId = req.session.user._id;
+//       if (!userId) {
+//         return res.status(400).json({ error: "El ID del usuario no está definido en la sesión" });
+//       }
+  
+//       const { message, cart } = await cartDAO.createCartForUser(userId);
+
+//       // Establecer el cartId en la sesión
+//     req.session.user.cartId = cart._id;
+  
+//     if (message === "Ya existe un carrito para este usuario") {
+//         return { message, cart }; // Retornar el carrito existente
+//       }
+
+
+//       return res.json({ message, cart });
+//     } catch (error) {
+//       console.error("Error al crear el carrito:", error);
+//       if (next) {
+//         return next(error); // Si hay un siguiente middleware, pasa el error
+//       }
+//       return res.status(500).json({ error: "Ocurrió un error al crear el carrito" });
+//     }
+//   };
+  
+
+
+
+
+
 export const getCart = async (req, res) => {
     try {
         const { cid } = req.params;
         if (!mongoose.Types.ObjectId.isValid(cid)) {
             return res.status(400).json({ error: "ID de carrito no válido" });
         }
-        const { message, cart } = await cartDAO.getCartById(cid);
+        const { message, cart } = await cartDAO.getCartById(cid)
         
         if (!cart) {
             return res.status(404).json({ error: "Carrito no encontrado" });
         }
         res.status(200).json({ message, cart });
+
     } catch (error) {
         console.error("Error al obtener el carrito:", error);
         res.status(500).json({ error: "Ocurrió un error al obtener el carrito" });
