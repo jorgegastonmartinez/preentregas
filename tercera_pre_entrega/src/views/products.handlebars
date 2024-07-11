@@ -18,8 +18,55 @@
 
 
 
+
+{{#if carts}}
+  <p>Cart ID: existe carrito?{{cart._id}}</p>
+  {{#if cart}}
+    <form action="/carts/{{user.cart._id}}" method="GET">
+      <button type="submit">Ver Carrito</button>
+    </form>
+  {{else}}
+    <p>No se encontró un carrito para este usuario.</p>
+  {{/if}}
+{{else}}
+  <p>No se encontró un carrito para este usuario.</p>
+{{/if}}
+
+
+
+
+
+
+{{#if user}}
+  <p>Cart ID: hola {{cart._id}}</p>
+  {{#if user.cart}}
+    <form action="/carts/{{user.cart._id}}" method="GET">
+      <button type="submit">Ver Carrito</button>
+    </form>
+  {{else}}
+    <p>No se encontró un carrito para este usuario.</p>
+  {{/if}}
+{{else}}
+  <p>No se encontró un carrito para este usuario.</p>
+{{/if}}
+
+
+
+
+
+{{!-- enlace!!!!!!!! --}}
+
+{{#if user}}
+  <p>Cart ID: {{user.cart._id}}</p>
+  <a href="/carts/{{user.cart._id}}">Ver Carrito</a>
+{{else}}
+  <p>No se encontró un carrito para este usuario.</p>
+{{/if}}
+
+
+
 <!-- Botón para ir a la vista del carrito del usuario -->
-  {{#if user.cartId}}
+  {{#if cart}}
     <form action="/carts/{{user.cartId}}" method="GET">
       <button type="submit">Ver Carrito</button>
     </form>
@@ -29,11 +76,18 @@
 
 
 
+  {{#if user}}
+      <form action="/carts/{{user.cart._id}}" method="GET">
+      <button type="submit">Ver Carrito</button>
+    </form>
+  {{else}}
+    <p>No se encontró un carrito para este usuario.</p>
+     {{/if}}
 
 
 <!-- Botón para ir a la vista del carrito del usuario -->
-  {{#if user.cartId}}
-    <form action="/carts/{{cartId}}" method="GET">
+  {{#if cart}}
+    <form action="/carts/{{cart._id}}" method="GET">
       <button type="submit">Ver Carrito</button>
     </form>
   {{else}}
@@ -42,7 +96,7 @@
 
 
          <!-- Botón para ir a la vista de carts -->
-        <form action="/carts/{{user.cartId}}" method="GET">
+        <form action="/carts/{{user.cart._id}}" method="GET">
             <button type="submit">Ver Carrito1</button>
         </form>
 

@@ -11,14 +11,39 @@ import {
 } from "../controllers/views.controller.js";
 // import { getCart } from "../controllers/cart.controller.js";
 
+
 const router = Router();
 
 router.get("/", renderLogin);
 router.get("/products", isAuthenticated, isUser, renderProducts);
-router.get("/carts/:cid", isAuthenticated, renderCart);
+router.get("/carts/:cid", renderCart);
 // router.get("/carts/:cid", isAuthenticated, getCart);
 router.get("/login", isNotAuthenticated, renderLoginPage);
 router.get("/register", isNotAuthenticated, renderRegisterPage);
 router.get("/admin/products", isAuthenticated, isAdmin, getProductsForAdmin);
+
+
+
+
+
+
+
+
+// router.get("/carts/:cid", async (req, res) => {
+//   const { cid } = req.params;
+
+//   const cart = await cartModel.findById(cid).populate("products.product").populate("user").lean();
+
+//   if (!cart) {
+//     return res.status(404).json({ error: "Carrito no encontrado" });
+//   }
+//   res.render("carts", {cart});
+// });
+
+
+
+
+
+
 
 export default router;

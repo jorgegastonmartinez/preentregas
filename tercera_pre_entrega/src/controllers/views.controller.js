@@ -27,32 +27,14 @@ export const renderProducts = async (req, res) => {
   res.render("products", { ...result, user});
 };
 
-
-
-// export const renderCart = async (req, res) => {
-//   try {
-//     const cart = await cartModel.find().populate('products.product').populate('user').lean();
-    
-//     if (!cart) {
-//         return res.status(404).json({ error: "Carrito no encontrado" });
-//     }
-//     // res.status(200).json({ cart });
-//     res.render("carts", { cart });
-
-// } catch (error) {
-//     console.error("Error al obtener el carrito:", error);
-//     res.status(500).json({ error: "Ocurrió un error al obtener el carrito" });
-// }
-// };
-
-
 export const renderCart = async (req, res) => {
   const { cid } = req.params;
 
-  const user = req.session.user; // Obtén la información del usuario desde la sesión
+  const user = req.session.user;
   console.log('User:', user);
 
   const cart = await cartModel.findById(cid).populate('products.product').populate('user').lean();
+
 
   console.log(cart);
   if (!cart) {
@@ -60,6 +42,7 @@ export const renderCart = async (req, res) => {
   }
   res.render("carts", {cart, user});
 };
+
 
 export const renderLoginPage = (req, res) => {
   res.render("login");

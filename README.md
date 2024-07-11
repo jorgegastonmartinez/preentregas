@@ -13,37 +13,18 @@ Jorge Martinez.
 
 ## Imagenes del proyecto
 
-router.post("/:cid/products/:pid")
+Vista de envío de mensajes del usuario
 
-![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-24%20a%20la(s)%206.05.22 p. m..png)
+![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-09%20a%20la(s)%207.27.06 p. m..png)
 
-Vista de products
+Vista de DTO del user
 
-![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-24%20a%20la(s)%206.29.24 p. m..png)
+![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-09%20a%20la(s)%207.36.23 p. m..png)
 
-router.delete("api/carts/:cid/products/:pid")
+Vista del carrito de un usuario específico
 
-![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-24%20a%20la(s)%206.19.08 p. m..png)
+![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-11%20a%20la(s)%207.49.31 p. m..png)
 
-router.get("/api/carts/:cid")
-
-![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-25%20a%20la(s)%209.04.41 p. m..png)
-
-router.put("api/carts/:cid")
-
-![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-26%20a%20la(s)%2012.15.23 p. m..png)
-
-router.put("/carts/:cid/products/:pid")
-
-![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-26%20a%20la(s)%2012.09.46 p. m..png)
-
-Vista agregar producto al carrito
-
-![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-27%20a%20la(s)%202.16.52 p. m..png)
-
-Vista de productos en el carrito
-
-![](./segunda_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-05-28%20a%20la(s)%2012.59.39 p. m..png)
 
 ## Comandos
 
