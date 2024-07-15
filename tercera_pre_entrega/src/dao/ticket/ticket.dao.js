@@ -24,7 +24,7 @@ export default class Ticket {
 
     createTicket = async (ticket) => {
         try {
-            let result = await ticketModel.create(ticket)
+            let result = await ticketModel.create(ticket);
             return result
         } catch (error) {
             console.log(error);

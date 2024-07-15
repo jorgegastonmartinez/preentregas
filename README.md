@@ -25,6 +25,17 @@ Vista del carrito de un usuario específico
 
 ![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-11%20a%20la(s)%207.49.31 p. m..png)
 
+Vista del Ticket Model
+
+![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-15%20a%20la(s)%206.10.44 p. m..png)
+
+Vista del Ticket generado 
+
+![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-15%20a%20la(s)%205.20.24 p. m..png)
+
+Vista Admin y User
+
+![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-15%20a%20la(s)%206.18.49 p. m..png)
 
 ## Comandos
 

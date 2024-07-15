@@ -17,7 +17,8 @@
       <h2>Ticket #{{ticket.id}}</h2>
       <p><strong>Fecha de Compra:</strong> {{ticket.purchase_datetime}}</p>
       <p><strong>Total:</strong> ${{ticket.amount}}</p>
-      <p><strong>Comprador:</strong> {{ticket.purchaser}}</p>
+      <p><strong>Comprador:</strong> {{ticket.purchaser.email}}</p>
+      <p>Código: {{ticket.code}}</p>
     </section>
     <a href="/api/carts/{{cartId}}" class="btn">Volver al Carrito</a>
   </main>

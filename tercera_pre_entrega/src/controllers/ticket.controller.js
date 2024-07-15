@@ -4,7 +4,7 @@ import User from '../dao/user/user.dao.js'
 import Product from '../dao/product/product.dao.js'
 import Cart from "../dao/cart/cart.dao.js"
 import cartsModel from '../models/cart.model.js';
-import ticketModel from '../models/ticket.model.js';
+import UserDTO from "../dto/user.dto.js";
 
 const ticketsService = new Ticket()
 const usersService = new User()
@@ -56,15 +56,11 @@ export const createTicket = async (req, res) => {
 }
 
 export const renderTicket = async (req, res) => {
+    const { tid } = req.params;
+    const { cid } = req.params;
+
     try {
-        const { tid } = req.params;
-        const { cid } = req.params;
-
-        if (!mongoose.Types.ObjectId.isValid(cid) || !mongoose.Types.ObjectId.isValid(tid)) {
-            return res.status(400).json({ error: "ID de carrito o ticket no válido" });
-        }
         const ticket = await ticketsService.getTicketById(tid);
-
         if (!ticket) {
             return res.status(404).render('error', { message: 'Ticket no encontrado' });
         }
@@ -74,10 +70,12 @@ export const renderTicket = async (req, res) => {
         console.log('Ticket:', ticket);
         console.log('Cart:', cart);
 
+        const userDTO = new UserDTO(req.session.user);
+
         const ticketData = {
             id: ticket._id.toString(),
             amount: ticket.amount,
-            purchaser: ticket.purchaser,
+            purchaser: userDTO, 
             cartId: ticket.cartId.toString(),
             code: ticket.code,
             purchase_datetime: ticket.purchase_datetime,

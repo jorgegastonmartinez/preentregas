@@ -122,11 +122,20 @@ export const purchaseCart = async (req, res) => {
         const { cid } = req.params;
         const { userId, userEmail } = req.body;  
 
+        if (!mongoose.Types.ObjectId.isValid(cid) || !mongoose.Types.ObjectId.isValid(userId)) {
+            console.error('ID de carrito o usuario no válido');
+            return res.status(400).json({ error: 'ID de carrito o usuario no válido' });
+        }
+
         if (!userId || !userEmail) {
             return res.status(400).json({ error: 'userId y userEmail son necesarios en el cuerpo de la solicitud' });
         }
 
-        const cart = await cartsModel.findById(cid);
+        const cart = await cartsModel.findById(cid).populate('products.product').populate('user').lean();
+        if (!cart) {
+            console.error('Carrito no encontrado');
+            return res.status(404).json({ error: "Carrito no encontrado" });
+        }
 
         if (!cart) {
             return res.status(404).json({ error: 'Carrito no encontrado' });
@@ -134,6 +143,12 @@ export const purchaseCart = async (req, res) => {
 
         if (cart.products.length === 0) {
             return res.status(400).json({ error: 'El carrito está vacío' });
+        }
+
+        const user = await usersModel.findById(userId);
+        if (!user) {
+            console.error('Usuario no encontrado');
+            return res.status(404).json({ error: 'Usuario no encontrado' });
         }
 
         const totalAmount = cart.products.reduce((total, item) => {
@@ -144,22 +159,19 @@ export const purchaseCart = async (req, res) => {
         }, 0);
 
         const ticket = await ticketService.createTicket({
-            // code: `TICKET-${Date.now()}`,
-            // purchase_datetime: new Date(),
             amount: totalAmount,
-            purchaser: userEmail,  
-            cartId: cart                  
+            purchase_datetime: new Date(),
+            purchaser: user.email,  
+            cartId: cart._id                 
         });
 
         for (const item of cart.products) {
             await productsModel.findByIdAndUpdate(item.product._id, { $inc: { stock: -item.quantity } });
         }
 
-        cart.products = [];
-        cart.total = 0;
-        await cart.save();
+        await cartsModel.findByIdAndUpdate(cid, { products: [], total: 0 });
 
-        await usersModel.findByIdAndUpdate(userId, userEmail, { cart: null });
+        await usersModel.findByIdAndUpdate(userId, { cart: null });
 
         res.status(201).json(ticket);
     } catch (error) {
