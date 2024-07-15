@@ -18,19 +18,14 @@ const ticketSchema = new mongoose.Schema({
         required: true  
     },
     purchaser: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
-        required: true
-    },
-    products: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "products",
-        required: true
-    }],
-    status: {
         type: String,
-        default: "Pending" 
-    }
+        required: true,
+    },
+    cartId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'carts',
+        required: true
+      }
 }, {
     timestamps: true  
 });

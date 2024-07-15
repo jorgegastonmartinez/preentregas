@@ -7,12 +7,6 @@ export const getUsers = async (req, res) => {
     res.send({ status: "success", result })
 }
 
-// export const getUserById = async (req, res) => {
-//     const { uid } = req.params
-//     let user = await usersService.getUserById(uid)
-//     res.send({ status: "success", result: user })
-// }
-
 export const getUserById = async (req, res) => {
     try {
         const { uid } = req.params;

@@ -1,5 +1,5 @@
 export const isAuthenticated = (req, res, next) => {
-    if (req.session.user) {
+    if (req.session && req.session.user) {
         return next();
     } else {
         res.redirect("/login");
@@ -28,4 +28,13 @@ export const isUser = (req, res, next) => {
     } else {
         res.redirect("/login");
     }
+};
+
+export const sessionLogger = (req, res, next) => {
+    if (req.session && req.session.user) {
+        console.log("Sesión activa:", req.session.user);
+    } else {
+        console.log("No hay sesión activa");
+    }
+    next();
 };

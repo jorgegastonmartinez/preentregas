@@ -8,9 +8,7 @@ import MongoStore from 'connect-mongo';
 import __dirname from './utils.js';
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
-//
 import { Server } from "socket.io";
-
 
 import sessionsRouter from './routes/api/sessions.js';
 import viewsRouter from './routes/views.router.js';
@@ -20,6 +18,8 @@ import "./config/passport.config.js";
 import adminRouter from "./routes/admin.router.js";
 import messageRouter from "./routes/messages.router.js";
 import ticketRouter from "./routes/ticket.router.js"
+import { sessionLogger } from './middleware/auth.js';
+import userRouter from "./routes/user.router.js"
 
 dotenv.config();
 const app = express();
@@ -51,11 +51,11 @@ app.use(session({
     cookie: { maxAge: 180 * 60 * 1000 },
 }));
 
-app.use(express.json());
-
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(sessionLogger)
+
 
 app.use('/api/sessions', sessionsRouter);
 app.use('/', viewsRouter);
@@ -63,7 +63,8 @@ app.use("/api", cartsRouter);
 app.use("/api", productsRouter);
 app.use("/api", adminRouter);
 app.use("/api/messages", messageRouter);
-app.use("/api/ticket", ticketRouter);
+app.use("/api", ticketRouter);
+app.use("/api/user", userRouter)
 
 socketServer.on("connection", (socket) => {
     console.log('Un usuario se ha conectado');

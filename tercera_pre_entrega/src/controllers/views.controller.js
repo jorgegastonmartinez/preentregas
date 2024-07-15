@@ -3,7 +3,6 @@ import productModel from "../models/product.model.js";
 import messageModel from '../models/message.model.js';
 import cartModel from "../models/cart.model.js";
 
-
 export const renderLogin = async (req, res) => {
     res.render("login", {});
 };

@@ -12,12 +12,9 @@ export default class User {
         }
     }
 
-    getUserById = async (userId) => {
+    getUserById = async (id) => {
         try {
-            if (!mongoose.Types.ObjectId.isValid(userId)) {
-                throw new Error("ID de usuario no válido");
-            }
-            const user = await usersModel.findById(userId).lean();
+            let user = await usersModel.findOne({ _id: id })
             return user;
         } catch (error) {
             console.error("Error al obtener el usuario:", error);

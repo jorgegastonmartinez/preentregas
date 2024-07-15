@@ -4,11 +4,11 @@ export default class Ticket {
 
     getTickets = async () => {
         try {
-            let result = await ticketModel.find()
-            return result
+            let result = await ticketModel.find();
+            return result;
         } catch (error) {
-            console.log(error);
-            return null
+            console.error('Error al obtener los tickets:', error);
+            return null;
         }
     }
 

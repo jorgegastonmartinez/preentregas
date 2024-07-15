@@ -1,14 +1,10 @@
 import { Router } from "express";
-import { getTickets, getTicketById, createTicket, resolveTicket, renderTicketPage } from '../controllers/ticket.controller.js'
+import { getTickets, getTicketById, renderTicket } from '../controllers/ticket.controller.js'
 
 const router = Router()
 
-router.get('/', getTickets)
-router.post('/', createTicket)
-router.get('/:oid', getTicketById)
-router.put('/:oid', resolveTicket)
-
-router.get('/view/new', renderTicketPage); // Nueva ruta para renderizar la vista del ticket
-
+router.get('/ticket', getTickets)
+router.get('/ticket/:tid', getTicketById)
+router.get('/ticket/view/:tid', renderTicket);
 
 export default router;

@@ -1,7 +1,13 @@
 import mongoose from "mongoose";
 import CartDAO from '../dao/cart/cart.dao.js';
+import TicketDAO from "../dao/ticket/ticket.dao.js";
 
-const cartDAO = new CartDAO();
+import cartsModel from "../models/cart.model.js";
+import productsModel from "../models/product.model.js";
+import usersModel from "../models/user.model.js";
+
+const cartService = new CartDAO();
+const ticketService = new TicketDAO();
 
 export const createCart = async (req, res) => {
     try {
@@ -9,7 +15,7 @@ export const createCart = async (req, res) => {
         if (!userId) {
             return res.status(400).json({ error: "El ID del usuario no está definido en la sesión" });
         }
-        const { message, cart } = await cartDAO.createCartForUser(userId);
+        const { message, cart } = await cartService.createCartForUser(userId);
 
         if (message === "Ya existe un carrito para este usuario") { 
             return res.json({ message, cart });
@@ -28,12 +34,12 @@ export const getCart = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(cid)) {
             return res.status(400).json({ error: "ID de carrito no válido" });
         }
-        const { message, cart } = await cartDAO.getCartById(cid)
+        const { message, cart } = await cartService.getCartById(cid).populate('products.product').lean();
         
         if (!cart) {
             return res.status(404).json({ error: "Carrito no encontrado" });
         }
-        res.status(200).json({ message, cart });
+        res.render('carts', { cart }); 
 
     } catch (error) {
         console.error("Error al obtener el carrito:", error);
@@ -49,7 +55,7 @@ export const addProductToCart = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(cid) || !mongoose.Types.ObjectId.isValid(pid)) {
             return res.status(400).json({ error: "ID de carrito o producto no válido" });
         }
-        const { message, cart } = await cartDAO.addProductToCart(cid, pid, quantity);
+        const { message, cart } = await cartService.addProductToCart(cid, pid, quantity);
 
         res.status(200).json({ message, cart });
     } catch (error) {
@@ -65,7 +71,7 @@ export const removeProductFromCart = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(cid) || !mongoose.Types.ObjectId.isValid(pid)) {
             return res.status(400).json({ error: "ID de carrito o producto no válido" });
         }
-        const { message, cart } = await cartDAO.removeProductFromCart(cid, pid);
+        const { message, cart } = await cartService.removeProductFromCart(cid, pid);
 
         res.status(200).json({ message, cart });
     } catch (error) {
@@ -79,7 +85,7 @@ export const updateCart = async (req, res) => {
     const { products } = req.body;
 
     try {
-        const { message, cart } = await cartDAO.updateCart(cid, products);
+        const { message, cart } = await cartService.updateCart(cid, products);
         return res.status(200).json({ message, cart });
     } catch (error) {
         console.error("Error al actualizar el carrito:", error.message);
@@ -92,7 +98,7 @@ export const updateProductQuantity = async (req, res) => {
     const { quantity } = req.body;
 
     try {
-        const { message, cart } = await cartDAO.updateProductQuantity(cid, pid, quantity);
+        const { message, cart } = await cartService.updateProductQuantity(cid, pid, quantity);
         return res.status(200).json({ message, cart });
     } catch (error) {
         console.error('Error al actualizar la cantidad del producto en el carrito:', error.message);
@@ -103,10 +109,61 @@ export const updateProductQuantity = async (req, res) => {
 export const clearCart = async (req, res) => {
     const { cid } = req.params;
     try {
-        const { message, cart } = await cartDAO.clearCart(cid);
+        const { message, cart } = await cartService.clearCart(cid);
         return res.status(200).json({ message, cart });
     } catch (error) {
         console.error('Error al eliminar los productos del carrito:', error.message);
         return res.status(500).json({ error: 'Error al eliminar los productos del carrito' });
+    }
+};
+
+export const purchaseCart = async (req, res) => {
+    try {
+        const { cid } = req.params;
+        const { userId, userEmail } = req.body;  
+
+        if (!userId || !userEmail) {
+            return res.status(400).json({ error: 'userId y userEmail son necesarios en el cuerpo de la solicitud' });
+        }
+
+        const cart = await cartsModel.findById(cid);
+
+        if (!cart) {
+            return res.status(404).json({ error: 'Carrito no encontrado' });
+        }
+
+        if (cart.products.length === 0) {
+            return res.status(400).json({ error: 'El carrito está vacío' });
+        }
+
+        const totalAmount = cart.products.reduce((total, item) => {
+            if (!item.product || typeof item.product.price !== 'number' || typeof item.quantity !== 'number') {
+                throw new Error('Datos de carrito inválidos');
+            }
+            return total + (item.product.price * item.quantity);
+        }, 0);
+
+        const ticket = await ticketService.createTicket({
+            // code: `TICKET-${Date.now()}`,
+            // purchase_datetime: new Date(),
+            amount: totalAmount,
+            purchaser: userEmail,  
+            cartId: cart                  
+        });
+
+        for (const item of cart.products) {
+            await productsModel.findByIdAndUpdate(item.product._id, { $inc: { stock: -item.quantity } });
+        }
+
+        cart.products = [];
+        cart.total = 0;
+        await cart.save();
+
+        await usersModel.findByIdAndUpdate(userId, userEmail, { cart: null });
+
+        res.status(201).json(ticket);
+    } catch (error) {
+        console.error('Error al finalizar la compra del carrito:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
     }
 };
