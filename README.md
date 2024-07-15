@@ -29,6 +29,10 @@ Vista del Ticket Model
 
 ![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-15%20a%20la(s)%206.10.44 p. m..png)
 
+Vista PurchaseCart
+
+![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-15%20a%20la(s)%206.39.21 p. m..png)
+
 Vista del Ticket generado 
 
 ![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-15%20a%20la(s)%205.20.24 p. m..png)
