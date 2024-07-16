@@ -6,6 +6,10 @@ import cartsModel from "../models/cart.model.js";
 import productsModel from "../models/product.model.js";
 import usersModel from "../models/user.model.js";
 
+//
+import { sendTicketEmail } from "../controllers/nodemailer.controller.js"
+//
+
 const cartService = new CartDAO();
 const ticketService = new TicketDAO();
 
@@ -172,6 +176,12 @@ export const purchaseCart = async (req, res) => {
         await cartsModel.findByIdAndUpdate(cid, { products: [], total: 0 });
 
         await usersModel.findByIdAndUpdate(userId, { cart: null });
+
+        const productDetails = cart.products.map(product => 
+            `Producto: ${product.product.title}\nCantidad: ${product.quantity}\nPrecio: $ ${product.product.price}\n`
+        ).join('\n');
+
+        await sendTicketEmail(ticket, user, productDetails);
 
         res.status(201).json(ticket);
     } catch (error) {

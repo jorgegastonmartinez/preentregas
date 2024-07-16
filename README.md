@@ -35,11 +35,19 @@ Vista PurchaseCart
 
 Vista del Ticket generado 
 
-![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-15%20a%20la(s)%205.20.24 p. m..png)
+![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-15%20a%20la(s)%2011.42.27 p. m..png)
 
 Vista Admin y User
 
 ![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-15%20a%20la(s)%206.18.49 p. m..png)
+
+Vista Admin
+
+![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-15%20a%20la(s)%2011.46.04 p. m..png)
+
+Vista de envio de correo electrónico
+
+![](./tercera_pre_entrega/src/public/img/Captura%20de%20pantalla%202024-07-15%20a%20la(s)%2011.38.35 p. m..png)
 
 ## Comandos
 
